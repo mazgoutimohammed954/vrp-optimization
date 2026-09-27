@@ -84,40 +84,14 @@ class Instance:
 
 
 # Création des données
+if __name__ == "__main__":
 
-depot = [0, 0]
-
-clients = [
-    [3, 4],
-    [6, 8],
-    [10, 0]
-]
-
-
-# Création de l'instance
-
-instance = Instance(depot, clients)
-
-
-# Afficher le nombre de clients
-
-print("Nombre de clients :", instance.n_clients)
-
-
-# Afficher la matrice
-
-
-print("Matrice des distances :")
-print(instance.distance_matrix)
-
-
-# Créer une tournée
-
-tour = [1, 2, 3]
-
-
-# Calculer sa longueur
-
-distance = instance.longueur_tour(tour)
-
-print("Distance totale :", distance)
+    depot = [0, 0]
+    clients = [[3, 4], [6, 8], [10, 0]]
+    instance = Instance(depot, clients)
+    print("Nombre de clients :", instance.n_clients)
+    print("Matrice des distances :")
+    print(instance.distance_matrix)
+    tour = [1, 2, 3]
+    distance = instance.longueur_tour(tour)
+    print("Distance totale :", distance)
