@@ -57,3 +57,31 @@ class Instance:
         d = self._distance_matrix
         full = [0, *tour, 0]
         return float(sum(d[full[i], full[i + 1]] for i in range(len(full) - 1)))
+
+
+def generate_random_instance(
+    n_clients: int,
+    width: float = 100.0,
+    height: float = 100.0,
+    seed: int | None = None,
+    with_demands: bool = False,
+    demand_range: tuple[int, int] = (1, 10),
+    vehicle_capacity: float | None = None,
+) -> Instance:
+    """Génère une instance aléatoire : un dépôt et n_clients clients
+    uniformément répartis dans un rectangle width x height.
+    """
+    rng = np.random.default_rng(seed)
+    depot = rng.uniform([0, 0], [width, height], size=2)
+    clients = rng.uniform([0, 0], [width, height], size=(n_clients, 2))
+
+    demands = None
+    if with_demands:
+        demands = rng.integers(demand_range[0], demand_range[1] + 1, size=n_clients)
+
+    return Instance(
+        depot=depot,
+        clients=clients,
+        demands=demands,
+        vehicle_capacity=vehicle_capacity,
+    )
