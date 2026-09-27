@@ -1,0 +1,10 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+output/*
+!output/.gitkeep
+.streamlit/
+.pytest_cache/
+.DS_Store
+*.egg-info/
