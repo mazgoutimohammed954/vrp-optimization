@@ -1,56 +1,28 @@
-import matplotlib.pyplot as plt
+def afficher_tournee(instance, tournee, titre="Tournée"):
 
+    import matplotlib.pyplot as plt
+    import numpy as np
 
-def afficher_instance(instance):
+    # Ordre complet : dépôt -> clients -> dépôt
+    ordre = [0] + tournee + [0]
 
-    # Récupérer le dépôt
-    depot = instance.depot
+    # Tous les points (dépôt + clients)
+    points = np.vstack([instance.depot, instance.clients])
 
-    # Récupérer les clients
-    clients = instance.clients
+    xs = [points[i][0] for i in ordre]
+    ys = [points[i][1] for i in ordre]
 
-    # Coordonnées du dépôt
-    x_depot = depot[0]
-    y_depot = depot[1]
+    # Tracer les lignes reliant les points dans l'ordre de la tournée
+    plt.plot(xs, ys, "o-", color="blue", markersize=6)
 
-    # Afficher le dépôt
-    plt.scatter(
-        x_depot,
-        y_depot,
-        color="red",
-        marker="s",
-        s=150
-    )
+    # Le dépôt en rouge, par-dessus
+    plt.scatter(points[0][0], points[0][1], color="red", marker="s", s=120, zorder=5)
 
-    # Afficher les clients
-    for i in range(len(clients)):
+    # Numéroter les clients
+    for i in range(1, len(points)):
+        plt.text(points[i][0] + 0.3, points[i][1] + 0.3, str(i), fontsize=9)
 
-        x = clients[i][0]
-        y = clients[i][1]
-
-        plt.scatter(
-            x,
-            y,
-            color="blue",
-            s=60
-        )
-
-        # Afficher le numéro du client
-        plt.text(
-            x + 0.2,
-            y + 0.2,
-            str(i + 1)
-        )
-
-    # Titre
-    plt.title("Clients et dépôt")
-
-    # Nom des axes
-    plt.xlabel("X")
-    plt.ylabel("Y")
-
-    # Garder les mêmes proportions
+    plt.title(f"{titre} — Longueur = {instance.longueur_tour(tournee):.2f}")
     plt.axis("equal")
-
-    # Afficher le graphique
+    plt.grid(True)
     plt.show()
