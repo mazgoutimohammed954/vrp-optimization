@@ -17,3 +17,18 @@ def population_initiale(instance, taille_population):
 
     return population
 
+def selection_tournoi(instance, population, taille_tournoi=3):
+
+    participants = random.sample(population, taille_tournoi)
+
+    meilleur = participants[0]
+    meilleure_longueur = instance.longueur_tour(meilleur)
+
+    for individu in participants:
+        longueur = instance.longueur_tour(individu)
+        if longueur < meilleure_longueur:
+            meilleur = individu
+            meilleure_longueur = longueur
+
+    return meilleur
+
