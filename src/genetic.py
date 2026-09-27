@@ -32,3 +32,35 @@ def selection_tournoi(instance, population, taille_tournoi=3):
 
     return meilleur
 
+def croisement_ox(parent1, parent2):
+
+    n = len(parent1)
+
+    # On choisit 2 points de coupe au hasard
+    a = random.randint(0, n - 1)
+    b = random.randint(0, n - 1)
+
+    debut = min(a, b)
+    fin = max(a, b)
+
+    # L'enfant, vide au départ (None = pas encore rempli)
+    enfant = [None] * n
+
+    # On copie le morceau du parent1 tel quel
+    enfant[debut:fin+1] = parent1[debut:fin+1]
+
+    # On complète avec les clients du parent2, dans leur ordre,
+    # en sautant ceux déjà présents dans l'enfant
+    position = 0
+
+    for client in parent2:
+
+        if client not in enfant:
+
+            # On cherche la prochaine case vide dans l'enfant
+            while enfant[position] is not None:
+                position += 1
+
+            enfant[position] = client
+
+    return enfant
