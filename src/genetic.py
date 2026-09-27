@@ -64,3 +64,18 @@ def croisement_ox(parent1, parent2):
             enfant[position] = client
 
     return enfant
+
+def mutation(individu, taux_mutation=0.1):
+
+    # Avec une petite probabilité, on échange 2 clients de place
+    if random.random() < taux_mutation:
+
+        n = len(individu)
+
+        i = random.randint(0, n - 1)
+        j = random.randint(0, n - 1)
+
+        individu[i], individu[j] = individu[j], individu[i]
+
+    return individu
+
