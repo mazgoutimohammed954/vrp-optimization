@@ -79,3 +79,46 @@ def mutation(individu, taux_mutation=0.1):
 
     return individu
 
+
+def algorithme_genetique(instance, taille_population=50, nb_generations=200, taux_mutation=0.1):
+
+    # Population de départ
+    population = population_initiale(instance, taille_population)
+
+    # On garde en mémoire le meilleur individu jamais trouvé (élitisme)
+    meilleur_individu = min(population, key=lambda ind: instance.longueur_tour(ind))
+    meilleure_longueur = instance.longueur_tour(meilleur_individu)
+
+    for generation in range(nb_generations):
+
+        nouvelle_population = []
+
+        # On garde toujours le meilleur individu tel quel (élitisme)
+        nouvelle_population.append(meilleur_individu)
+
+        # On complète la nouvelle génération
+        while len(nouvelle_population) < taille_population:
+
+            # Sélection de 2 parents
+            parent1 = selection_tournoi(instance, population)
+            parent2 = selection_tournoi(instance, population)
+
+            # Croisement
+            enfant = croisement_ox(parent1, parent2)
+
+            # Mutation
+            enfant = mutation(enfant, taux_mutation)
+
+            nouvelle_population.append(enfant)
+
+        population = nouvelle_population
+
+        # Mise à jour du meilleur individu trouvé
+        meilleur_de_la_generation = min(population, key=lambda ind: instance.longueur_tour(ind))
+        longueur_de_la_generation = instance.longueur_tour(meilleur_de_la_generation)
+
+        if longueur_de_la_generation < meilleure_longueur:
+            meilleur_individu = meilleur_de_la_generation
+            meilleure_longueur = longueur_de_la_generation
+
+    return meilleur_individu
