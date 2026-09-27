@@ -25,7 +25,7 @@ tour_glouton = plus_proche_voisin(instance)
 tour_2opt = deux_opt(instance, list(tour_glouton))
 
 # Algorithme génétique
-tour_genetique = algorithme_genetique(instance, taille_population=50, nb_generations=200)
+tour_genetique = algorithme_genetique(instance, taille_population=50, nb_generations=200, tour_glouton=tour_glouton)
 
 
 # Comparaison des 3 méthodes

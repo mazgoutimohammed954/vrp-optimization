@@ -1,18 +1,17 @@
 import random
 
 
-def population_initiale(instance, taille_population):
+def population_initiale(instance, taille_population, tour_glouton=None):
 
     population = []
 
-    for i in range(taille_population):
+    if tour_glouton is not None:
+        population.append(list(tour_glouton))
 
-        # Liste des clients (indices 1 à n)
+    while len(population) < taille_population:
+
         individu = list(range(1, instance.n_clients + 1))
-
-        # Mélange au hasard
         random.shuffle(individu)
-
         population.append(individu)
 
     return population
@@ -80,10 +79,10 @@ def mutation(individu, taux_mutation=0.1):
     return individu
 
 
-def algorithme_genetique(instance, taille_population=50, nb_generations=200, taux_mutation=0.1):
+def algorithme_genetique(instance, taille_population=50, nb_generations=200, taux_mutation=0.1, tour_glouton=None):
 
     # Population de départ
-    population = population_initiale(instance, taille_population)
+    population = population_initiale(instance, taille_population, tour_glouton)
 
     # On garde en mémoire le meilleur individu jamais trouvé (élitisme)
     meilleur_individu = min(population, key=lambda ind: instance.longueur_tour(ind))
